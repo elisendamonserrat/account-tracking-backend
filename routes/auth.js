@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 
-const { checkUsernameAndPasswordNotEmpty } = require('../middlewares');
+const { checkEmailAndPasswordNotEmpty } = require('../middlewares');
 
 const User = require('../models/User');
 
@@ -18,7 +18,7 @@ router.get('/whoami', (req, res, next) => {
 	}
 });
 
-router.post('/signup', checkUsernameAndPasswordNotEmpty, async (req, res, next) => {
+router.post('/signup', checkEmailAndPasswordNotEmpty, async (req, res, next) => {
 	const { firstName, email, password } = res.locals.auth;
 	try {
 		const user = await User.findOne({ email });
@@ -37,7 +37,7 @@ router.post('/signup', checkUsernameAndPasswordNotEmpty, async (req, res, next) 
 	}
 });
 
-router.post('/login', checkUsernameAndPasswordNotEmpty, async (req, res, next) => {
+router.post('/login', checkEmailAndPasswordNotEmpty, async (req, res, next) => {
 	const { email, password } = res.locals.auth;
 	try {
 		const user = await User.findOne({ email });
