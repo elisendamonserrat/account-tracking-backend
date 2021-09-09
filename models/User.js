@@ -5,16 +5,18 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
 	{
-		firstName: { type: String, required: true, unique: true },
+		firstName: { type: String, required: true },
 		email: {
 			type: String,
 			required: [true, 'Este campo es obligatorio'],
 			lowercase: true,
 			trim: true,
 			unique: true,
-			validate: validator.isEmail,
-			message: '{VALUE} no es un email valido',
-			index: true,
+			validate: {
+				validator: validator.isEmail,
+				message: 'Email no valido',
+      			isAsync: false,
+			},
 		},
 		hashedPassword: {
 			type: String,
