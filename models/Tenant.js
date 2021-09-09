@@ -3,12 +3,12 @@ const validator = require('validator');
 
 const { Schema, model } = mongoose;
 
-const userSchema = new Schema(
+const tenantSchema = new Schema(
 	{
 		firstName: { type: String, required: true },
+		lastName: { type: String, required: true },
 		email: {
 			type: String,
-			required: [true, 'Este campo es obligatorio'],
 			lowercase: true,
 			trim: true,
 			unique: true,
@@ -18,11 +18,14 @@ const userSchema = new Schema(
 				isAsync: false,
 			},
 		},
-		hashedPassword: {
-			type: String,
-			required: true,
-			minlength: 6,
-		},
+		phone: { type: Number },
+		property: { type: String, required: true },
+		address: { type: String },
+		rentAmount: { type: Number, required: true },
+		rentPaymentHistory: [{ type: Schema.Types.ObjectId, ref: 'Rent' }],
+		waterContract: String,
+		electricityContract: String,
+		insurance: String,
 	},
 	{
 		timestamps: {
@@ -32,4 +35,4 @@ const userSchema = new Schema(
 	}
 );
 
-module.exports = model('User', userSchema);
+module.exports = model('Tenant', tenantSchema);
